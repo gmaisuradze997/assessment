@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="%lang%">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+		<meta name="text-scale" content="scale" />
+		<!-- Non-blocking self-hosted faces (LHCI blocks these URLs — see lighthouserc). -->
+		<link rel="stylesheet" href="/fonts.css" media="print" onload="this.media = 'all'" />
+		<noscript><link rel="stylesheet" href="/fonts.css" /></noscript>
+		<script>
+			// Applies a stored theme override before first paint. With no
+			// override the document keeps `color-scheme: light dark` and the
+			// OS preference decides — so prerendered and CDN-cached HTML stays
+			// identical for every visitor.
+			try {
+				var pref = localStorage.getItem('theme');
+				if (pref === 'light' || pref === 'dark') {
+					document.documentElement.classList.add('theme-' + pref);
+					document.documentElement.dataset.theme = pref;
+				}
+			} catch {
+				// Storage blocked — fall through to the OS preference.
+			}
+		</script>
+		<noscript>
+			<style>
+				[data-theme-toggle] {
+					display: none;
+				}
+			</style>
+		</noscript>
+		%sveltekit.head%
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">%sveltekit.body%</div>
+	</body>
+</html>
