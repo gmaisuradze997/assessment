@@ -1,0 +1,333 @@
+/**
+ * UI strings. The base dictionaries ship with the assignment
+ * (mocks/i18n.*.json) and are kept pristine; strings the app needs beyond
+ * them live in the overlays below so provenance stays obvious. Both are
+ * merged into one typed dictionary per locale — `MessageKey` is derived
+ * from the merged English dictionary, so a typo in a t() call is a type
+ * error, and English is the fallback for any key missing in another
+ * locale.
+ */
+import type { Locale } from './locales';
+
+import mockDe from '../../../mocks/i18n.de.json';
+import mockEn from '../../../mocks/i18n.en.json';
+
+const extraEn = {
+	'nav.skipToContent': 'Skip to content',
+	'nav.main': 'Main',
+	'locale.label': 'Language',
+	'locale.en': 'English',
+	'locale.de': 'Deutsch',
+	'theme.label': 'Theme',
+	'theme.system': 'Match system theme',
+	'theme.light': 'Light theme',
+	'theme.dark': 'Dark theme',
+
+	'home.hero.title': 'Campaigns that actually move the needle.',
+	'home.hero.subtitle':
+		'Plan, launch, and tune marketing campaigns in one playful workspace — without the spreadsheet chaos.',
+	'home.hero.cta': 'Start free',
+	'home.hero.secondaryCta': 'Read the blog',
+	'home.features.title': 'Built for shipping teams',
+	'home.features.performance.title': 'Live campaign pulse',
+	'home.features.performance.body':
+		'Budgets, spend, and CTR update as you work — so you catch winners before the week ends.',
+	'home.features.dx.title': 'Edit without friction',
+	'home.features.dx.body':
+		'Inline edits, optimistic updates, and filters that feel like Linear — not a 2008 admin panel.',
+	'home.features.i18n.title': 'Ready for every market',
+	'home.features.i18n.body':
+		'Localized URLs and content from day one, so EN and DE launches share the same playbook.',
+	'home.pricing.title': 'Pricing',
+	'home.pricing.subtitle': 'Start free. Upgrade when campaigns pay for themselves.',
+	'home.pricing.starter.name': 'Starter',
+	'home.pricing.starter.price': 'Free',
+	'home.pricing.starter.blurb': 'For side projects and first launches.',
+	'home.pricing.team.name': 'Team',
+	'home.pricing.team.price': '$49/mo',
+	'home.pricing.team.blurb': 'For teams running multi-channel campaigns.',
+	'home.pricing.enterprise.name': 'Enterprise',
+	'home.pricing.enterprise.price': 'Custom',
+	'home.pricing.enterprise.blurb': 'SSO, audit logs, and a human on call.',
+	'home.pricing.cta': 'Choose plan',
+	'home.social.title': 'Teams that launch with Campaignly',
+	'home.social.quote1': 'We finally see which channels earn their budget — in one afternoon.',
+	'home.social.quote1.author': 'Priya Iyer, Head of Growth',
+	'home.social.quote2': 'Feels like a modern ops tool, not another marketing graveyard.',
+	'home.social.quote2.author': 'Marek Dvořák, Staff Engineer',
+	'footer.copy': '© 2026 Campaignly',
+
+	'blog.meta.description':
+		'Articles on performance, internationalization, and shipping production web apps.',
+	'blog.searchLabel': 'Search posts',
+	'blog.filter.all': 'All posts',
+	'blog.publishedOn': 'Published {date}',
+	'pagination.previous': 'Previous',
+	'pagination.next': 'Next',
+	'pagination.pageOf': 'Page {page} of {pageCount}',
+	'pagination.nav': 'Pagination',
+
+	'search.title': 'Search',
+	'search.meta.description': 'Search all posts by keyword, topic, and date.',
+	'search.tags': 'Tags',
+	'search.sort.label': 'Sort',
+	'search.sort.relevance': 'Relevance',
+	'search.sort.newest': 'Newest',
+	'search.sort.oldest': 'Oldest',
+	'search.submit': 'Search',
+	'search.clear': 'Clear filters',
+	'search.resultsAll': '{count} posts',
+
+	'login.meta.description': 'Sign in to manage your campaigns.',
+	'login.validation.email': 'Enter a valid email address.',
+	'login.validation.password': 'Password must be at least 8 characters.',
+	'login.demoHint': 'Demo accounts — password is always {password}',
+	'login.redirected': 'Sign in to continue.',
+
+	'dashboard.greeting': 'Welcome back, {name}.',
+	'dashboard.meta.description': 'Overview of campaign performance: totals, budget, and spend.',
+	'dashboard.items.meta.description':
+		'Browse, filter, and edit campaigns: status, budget, spend, and CTR.',
+	'dashboard.viewItems': 'View campaigns',
+	'dashboard.role.viewer': 'You have read-only access. Edits will be rejected by the server.',
+	'dashboard.flags.betaInsights.enable': 'Try beta insights',
+	'dashboard.flags.betaInsights.disable': 'Turn off beta insights',
+	'dashboard.flags.betaInsights.title': 'Beta: campaign insights',
+	'dashboard.flags.betaInsights.body':
+		"Based on this week's spend, pause underperforming social campaigns and shift budget to email — gated by an SSR feature flag, so this panel never flashes on first paint.",
+	'dashboard.offline.title': "You're offline",
+	'dashboard.offline.body':
+		'The dashboard shell is cached for offline use. Reconnect to load live campaign data.',
+	'dashboard.offline.retry': 'Try again',
+	'dashboard.stats.total': 'Campaigns',
+	'dashboard.stats.active': 'Active',
+	'dashboard.stats.budget': 'Total budget',
+	'dashboard.stats.spent': 'Total spent',
+	'dashboard.stats.ctr': 'Avg. CTR',
+	'dashboard.stats.error': 'The summary failed to load. The table below is unaffected.',
+	'dashboard.items.searchPlaceholder': 'Search name or owner…',
+	'dashboard.items.filtersLabel': 'Filter campaigns',
+	'dashboard.items.tableLabel': 'Campaigns',
+	'dashboard.items.filter.status': 'Status',
+	'dashboard.items.filter.channel': 'Channel',
+	'dashboard.items.filter.owner': 'Owner',
+	'dashboard.items.filter.ownerPlaceholder': 'Filter by owner…',
+	'dashboard.items.filter.ownerResults': '{count} owners',
+	'dashboard.items.filter.ownerEmpty': 'No owners match',
+	'dashboard.items.filter.active': 'Active filters',
+	'dashboard.items.filter.remove': 'Remove {label}',
+	'dashboard.items.filter.chip.search': 'Search: {q}',
+	'dashboard.items.filter.chip.owner': 'Owner: {owner}',
+	'dashboard.items.filter.chip.status': 'Status: {status}',
+	'dashboard.items.filter.chip.channel': 'Channel: {channel}',
+	'dashboard.items.clearFilters': 'Clear filters',
+	'dashboard.items.noMatches': 'No campaigns match these filters.',
+	'dashboard.items.noMatchesHint': 'Try clearing filters or broadening your search.',
+	'dashboard.items.emptyHint': 'Campaigns will show up here once they are created.',
+	'dashboard.items.count': '{total} campaigns',
+	'dashboard.items.pageSize': 'Rows per page',
+	'dashboard.items.apply': 'Apply',
+	'dashboard.items.loadError': 'The campaign list could not be loaded.',
+	'dashboard.items.detail.title': 'Campaign details',
+	'dashboard.items.detail.open': 'View details for {name}',
+	'dashboard.items.detail.close': 'Close',
+	'dashboard.items.edit.open': 'Edit {name}',
+	'dashboard.items.edit.budgetLabel': 'Edit budget for {name}',
+	'dashboard.items.edit.statusLabel': 'Change status of {name}',
+	'dashboard.items.edit.invalidBudget': 'Budget must be a number between 0 and 10,000,000.',
+	'dashboard.items.edit.emptyPatch': 'Nothing to save.',
+	'dashboard.items.edit.forbidden': 'Your role does not allow editing.',
+	'dashboard.items.edit.notFound': 'This campaign no longer exists.',
+	'dashboard.items.edit.rolledBack': 'Could not save — your change was rolled back.',
+	'dashboard.items.edit.saved': 'Saved.',
+
+	'design.title': 'Design system',
+	'design.meta.description': 'Token-driven UI primitives and accessible composites.',
+	'ui.combobox.results': '{count} results',
+	'ui.combobox.empty': 'No results',
+	'ui.dialog.close': 'Close',
+
+	'status.draft': 'Draft',
+	'status.scheduled': 'Scheduled',
+	'status.active': 'Active',
+	'status.paused': 'Paused',
+	'status.completed': 'Completed',
+	'status.archived': 'Archived',
+	'channel.email': 'Email',
+	'channel.sms': 'SMS',
+	'channel.web': 'Web',
+	'channel.social': 'Social',
+	'channel.push': 'Push',
+
+	'error.404.title': 'Page not found',
+	'error.404.body': 'The page you are looking for does not exist or has moved.',
+	'error.500.title': 'Something went wrong',
+	'error.500.body': 'An unexpected error occurred. Try again in a moment.',
+	'error.backHome': 'Back to home'
+} satisfies Record<string, string>;
+
+const extraDe: Record<keyof typeof extraEn, string> = {
+	'nav.skipToContent': 'Zum Inhalt springen',
+	'nav.main': 'Hauptnavigation',
+	'locale.label': 'Sprache',
+	'locale.en': 'English',
+	'locale.de': 'Deutsch',
+	'theme.label': 'Design',
+	'theme.system': 'Systemdesign übernehmen',
+	'theme.light': 'Helles Design',
+	'theme.dark': 'Dunkles Design',
+
+	'home.hero.title': 'Kampagnen, die wirklich etwas bewegen.',
+	'home.hero.subtitle':
+		'Plane, starte und optimiere Marketing-Kampagnen in einem spielerischen Workspace — ohne Tabellen-Chaos.',
+	'home.hero.cta': 'Kostenlos starten',
+	'home.hero.secondaryCta': 'Blog lesen',
+	'home.features.title': 'Für Teams, die ausliefern',
+	'home.features.performance.title': 'Live-Kampagnenpuls',
+	'home.features.performance.body':
+		'Budget, Ausgaben und CTR aktualisieren sich mit — so erkennst du Gewinner noch in derselben Woche.',
+	'home.features.dx.title': 'Bearbeiten ohne Reibung',
+	'home.features.dx.body':
+		'Inline-Edits, optimistische Updates und Filter wie bei Linear — kein Admin-Panel von 2008.',
+	'home.features.i18n.title': 'Bereit für jeden Markt',
+	'home.features.i18n.body':
+		'Lokalisierte URLs und Inhalte vom ersten Tag, damit EN- und DE-Launches denselben Playbook teilen.',
+	'home.pricing.title': 'Preise',
+	'home.pricing.subtitle': 'Kostenlos starten. Upgraden, wenn Kampagnen sich rechnen.',
+	'home.pricing.starter.name': 'Starter',
+	'home.pricing.starter.price': 'Kostenlos',
+	'home.pricing.starter.blurb': 'Für Nebenprojekte und erste Launches.',
+	'home.pricing.team.name': 'Team',
+	'home.pricing.team.price': '49 $/Monat',
+	'home.pricing.team.blurb': 'Für Teams mit Multi-Channel-Kampagnen.',
+	'home.pricing.enterprise.name': 'Enterprise',
+	'home.pricing.enterprise.price': 'Individuell',
+	'home.pricing.enterprise.blurb': 'SSO, Audit-Logs und ein Mensch in Rufbereitschaft.',
+	'home.pricing.cta': 'Plan wählen',
+	'home.social.title': 'Teams, die mit Campaignly launchen',
+	'home.social.quote1':
+		'Endlich sehen wir, welche Kanäle ihr Budget verdienen — an einem Nachmittag.',
+	'home.social.quote1.author': 'Priya Iyer, Head of Growth',
+	'home.social.quote2':
+		'Fühlt sich wie ein modernes Ops-Tool an, nicht wie ein Marketing-Friedhof.',
+	'home.social.quote2.author': 'Marek Dvořák, Staff Engineer',
+	'footer.copy': '© 2026 Campaignly',
+
+	'blog.meta.description':
+		'Artikel über Performance, Internationalisierung und produktionsreife Web-Apps.',
+	'blog.searchLabel': 'Beiträge durchsuchen',
+	'blog.filter.all': 'Alle Beiträge',
+	'blog.publishedOn': 'Veröffentlicht am {date}',
+	'pagination.previous': 'Zurück',
+	'pagination.next': 'Weiter',
+	'pagination.pageOf': 'Seite {page} von {pageCount}',
+	'pagination.nav': 'Seitennavigation',
+
+	'search.title': 'Suche',
+	'search.meta.description': 'Alle Beiträge nach Stichwort, Thema und Datum durchsuchen.',
+	'search.tags': 'Themen',
+	'search.sort.label': 'Sortierung',
+	'search.sort.relevance': 'Relevanz',
+	'search.sort.newest': 'Neueste',
+	'search.sort.oldest': 'Älteste',
+	'search.submit': 'Suchen',
+	'search.clear': 'Filter zurücksetzen',
+	'search.resultsAll': '{count} Beiträge',
+
+	'login.meta.description': 'Melde dich an, um deine Kampagnen zu verwalten.',
+	'login.validation.email': 'Bitte eine gültige E-Mail-Adresse eingeben.',
+	'login.validation.password': 'Das Passwort muss mindestens 8 Zeichen lang sein.',
+	'login.demoHint': 'Demo-Konten — das Passwort ist immer {password}',
+	'login.redirected': 'Bitte melde dich an, um fortzufahren.',
+
+	'dashboard.greeting': 'Willkommen zurück, {name}.',
+	'dashboard.meta.description':
+		'Überblick über die Kampagnen-Performance: Summen, Budget und Ausgaben.',
+	'dashboard.items.meta.description':
+		'Kampagnen durchsuchen, filtern und bearbeiten: Status, Budget, Ausgaben und CTR.',
+	'dashboard.viewItems': 'Kampagnen ansehen',
+	'dashboard.role.viewer': 'Du hast nur Lesezugriff. Änderungen werden vom Server abgelehnt.',
+	'dashboard.flags.betaInsights.enable': 'Beta-Insights ausprobieren',
+	'dashboard.flags.betaInsights.disable': 'Beta-Insights ausschalten',
+	'dashboard.flags.betaInsights.title': 'Beta: Kampagnen-Insights',
+	'dashboard.flags.betaInsights.body':
+		'Basierend auf den Ausgaben dieser Woche: schwache Social-Kampagnen pausieren und Budget Richtung E-Mail verschieben — gesteuert über ein SSR-Feature-Flag, damit dieses Panel beim ersten Paint nie aufblitzt.',
+	'dashboard.offline.title': 'Du bist offline',
+	'dashboard.offline.body':
+		'Die Dashboard-Shell ist für den Offline-Einsatz gecacht. Verbinde dich erneut, um Live-Daten zu laden.',
+	'dashboard.offline.retry': 'Erneut versuchen',
+	'dashboard.stats.total': 'Kampagnen',
+	'dashboard.stats.active': 'Aktiv',
+	'dashboard.stats.budget': 'Gesamtbudget',
+	'dashboard.stats.spent': 'Ausgegeben',
+	'dashboard.stats.ctr': 'Ø CTR',
+	'dashboard.stats.error':
+		'Die Zusammenfassung konnte nicht geladen werden. Die Tabelle unten ist nicht betroffen.',
+	'dashboard.items.searchPlaceholder': 'Name oder Owner suchen…',
+	'dashboard.items.filtersLabel': 'Kampagnen filtern',
+	'dashboard.items.tableLabel': 'Kampagnen',
+	'dashboard.items.filter.status': 'Status',
+	'dashboard.items.filter.channel': 'Kanal',
+	'dashboard.items.filter.owner': 'Owner',
+	'dashboard.items.filter.ownerPlaceholder': 'Nach Owner filtern…',
+	'dashboard.items.filter.ownerResults': '{count} Owner',
+	'dashboard.items.filter.ownerEmpty': 'Keine Owner gefunden',
+	'dashboard.items.filter.active': 'Aktive Filter',
+	'dashboard.items.filter.remove': '{label} entfernen',
+	'dashboard.items.filter.chip.search': 'Suche: {q}',
+	'dashboard.items.filter.chip.owner': 'Owner: {owner}',
+	'dashboard.items.filter.chip.status': 'Status: {status}',
+	'dashboard.items.filter.chip.channel': 'Kanal: {channel}',
+	'dashboard.items.clearFilters': 'Filter zurücksetzen',
+	'dashboard.items.noMatches': 'Keine Kampagnen entsprechen diesen Filtern.',
+	'dashboard.items.noMatchesHint': 'Setze Filter zurück oder erweitere deine Suche.',
+	'dashboard.items.emptyHint': 'Kampagnen erscheinen hier, sobald sie angelegt sind.',
+	'dashboard.items.count': '{total} Kampagnen',
+	'dashboard.items.pageSize': 'Zeilen pro Seite',
+	'dashboard.items.apply': 'Anwenden',
+	'dashboard.items.loadError': 'Die Kampagnenliste konnte nicht geladen werden.',
+	'dashboard.items.detail.title': 'Kampagnendetails',
+	'dashboard.items.detail.open': 'Details zu {name} anzeigen',
+	'dashboard.items.detail.close': 'Schließen',
+	'dashboard.items.edit.open': '{name} bearbeiten',
+	'dashboard.items.edit.budgetLabel': 'Budget von {name} bearbeiten',
+	'dashboard.items.edit.statusLabel': 'Status von {name} ändern',
+	'dashboard.items.edit.invalidBudget': 'Das Budget muss eine Zahl zwischen 0 und 10.000.000 sein.',
+	'dashboard.items.edit.emptyPatch': 'Nichts zu speichern.',
+	'dashboard.items.edit.forbidden': 'Deine Rolle erlaubt keine Bearbeitung.',
+	'dashboard.items.edit.notFound': 'Diese Kampagne existiert nicht mehr.',
+	'dashboard.items.edit.rolledBack':
+		'Speichern fehlgeschlagen — deine Änderung wurde zurückgesetzt.',
+	'dashboard.items.edit.saved': 'Gespeichert.',
+
+	'design.title': 'Designsystem',
+	'design.meta.description': 'Token-basierte UI-Primitives und barrierefreie Composites.',
+	'ui.combobox.results': '{count} Ergebnisse',
+	'ui.combobox.empty': 'Keine Ergebnisse',
+	'ui.dialog.close': 'Schließen',
+
+	'status.draft': 'Entwurf',
+	'status.scheduled': 'Geplant',
+	'status.active': 'Aktiv',
+	'status.paused': 'Pausiert',
+	'status.completed': 'Abgeschlossen',
+	'status.archived': 'Archiviert',
+	'channel.email': 'E-Mail',
+	'channel.sms': 'SMS',
+	'channel.web': 'Web',
+	'channel.social': 'Social',
+	'channel.push': 'Push',
+
+	'error.404.title': 'Seite nicht gefunden',
+	'error.404.body': 'Die gesuchte Seite existiert nicht oder wurde verschoben.',
+	'error.500.title': 'Etwas ist schiefgelaufen',
+	'error.500.body': 'Ein unerwarteter Fehler ist aufgetreten. Versuche es gleich noch einmal.',
+	'error.backHome': 'Zur Startseite'
+};
+
+const en = { ...mockEn, ...extraEn };
+const de = { ...mockDe, ...extraDe };
+
+export type MessageKey = keyof typeof en;
+
+export const dictionaries: Record<Locale, Record<MessageKey, string>> = { en, de };
