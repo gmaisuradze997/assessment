@@ -3,11 +3,10 @@
 	import { localizePath } from '$lib/i18n/locales';
 	import { currentLocale, t } from '$lib/i18n/runtime.svelte';
 	import Button from '$lib/ui/Button.svelte';
-	import { FOCUS_RING } from '$lib/ui/variants';
 
 	const { data } = $props();
 	const locale = $derived(currentLocale());
-	const betaInsights = $derived(data.flags.betaInsights);
+	// const betaInsights = $derived(data.flags.betaInsights);
 
 	const cards = $derived([
 		{ label: t('dashboard.stats.total'), value: formatNumber(locale, data.stats.total) },
@@ -36,7 +35,7 @@
 		</p>
 	{/if}
 
-	{#if betaInsights}
+	<!-- {#if betaInsights}
 		<aside
 			class="mt-6 rounded-control border border-accent bg-primary-muted px-4 py-4 sm:px-5"
 			aria-labelledby="beta-insights-title"
@@ -74,7 +73,7 @@
 				{t('dashboard.flags.betaInsights.enable')}
 			</button>
 		</form>
-	{/if}
+	{/if} -->
 
 	<div class="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
 		{#each cards as card (card.label)}
